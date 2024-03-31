@@ -1,6 +1,35 @@
-<script></script>
+<script>
+  import { page, navigating } from '$app/stores';  
 
-<nav class="bg-gray-800">
+  let menuList = [
+    {title: 'Menu1', link: '/menu1', current: true,},
+    {title: 'Menu2', link: '/menu2', current: false,},
+    {title: 'Menu3', link: '/menu3', current: false,},
+  ]
+  
+  let currentPage = null;
+
+  const activeState = (item) => {
+    menuList.filter(e => {
+      e.current = false;
+      if(e.link === item) e.current = true;
+    });
+
+  }
+
+  $: {
+    if ($navigating){
+      currentPage = $navigating.to.route.id;
+      activeState(currentPage);
+    }
+    if(menuList) {
+      menuList = menuList;
+    }
+  }
+  
+</script>
+
+<nav id="navigation" class="bg-gray-800">
     <div class="mx-auto max-w-7xl px-2 sm:px-6 lg:px-8">
       <div class="relative flex h-16 items-center justify-between">
         <div class="absolute inset-y-0 left-0 flex items-center sm:hidden">
@@ -32,15 +61,19 @@
           </div>
           <div class="hidden sm:ml-6 sm:block">
             <div class="flex space-x-4">
-              <!-- Current: "bg-gray-900 text-white", Default: "text-gray-300 hover:bg-gray-700 hover:text-white" -->
-              <a href="#" class="bg-gray-900 text-white rounded-md px-3 py-2 text-sm font-medium" aria-current="page">Dashboard</a>
-              <a href="#" class="text-gray-300 hover:bg-gray-700 hover:text-white rounded-md px-3 py-2 text-sm font-medium">Team</a>
-              <a href="#" class="text-gray-300 hover:bg-gray-700 hover:text-white rounded-md px-3 py-2 text-sm font-medium">Projects</a>
-              <a href="#" class="text-gray-300 hover:bg-gray-700 hover:text-white rounded-md px-3 py-2 text-sm font-medium">Calendar</a>
+              {#each menuList as item, i (i)}
+                <a href="{ item.link }" class="{item.current ? `bg-gray-900 text-white` : ``} text-gray-300 rounded-md px-3 py-2 text-sm font-medium" >{ item.title }</a>
+              {/each}
             </div>
           </div>
         </div>
-        
+        <div class="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0">
+          <button class="border rounded-md px-2 py-1">
+            <span class="text-sm font-semibold leading-6 text-white">
+              Logout <span aria-hidden="true">→</span>
+            </span>
+          </button>
+        </div>
       </div>
     </div>
   
