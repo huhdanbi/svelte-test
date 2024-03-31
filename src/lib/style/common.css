@@ -2,5 +2,5 @@
 @tailwind components;
 @tailwind utilities;
 
-#navigation{position: absolute;left:0;top:0;width:100vw;}
+#navigation{position: absolute;left:0;top:0;width:100%;}
 #contents{min-height: 100vh;padding-top:64px;}

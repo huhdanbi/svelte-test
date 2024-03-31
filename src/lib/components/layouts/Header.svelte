@@ -1,8 +1,9 @@
 <script>
-  import { page, navigating } from '$app/stores';  
+  import { page } from '$app/stores';  
 
   let menuList = [
-    {title: 'Menu1', link: '/menu1', current: true,},
+    {title: 'HOME', link: '/', current: true,},
+    {title: 'Menu1', link: '/menu1', current: false,},
     {title: 'Menu2', link: '/menu2', current: false,},
     {title: 'Menu3', link: '/menu3', current: false,},
   ]
@@ -12,13 +13,11 @@
       e.current = false;
       if(e.link === item) e.current = true;
     });
-
   }
 
   $: {
-    if ($navigating){
-      activeState($navigating.to.route.id);
-    }
+    activeState($page.route.id);
+
     if(menuList) {
       menuList = menuList;
     }
