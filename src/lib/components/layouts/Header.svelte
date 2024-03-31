@@ -7,8 +7,6 @@
     {title: 'Menu3', link: '/menu3', current: false,},
   ]
   
-  let currentPage = null;
-
   const activeState = (item) => {
     menuList.filter(e => {
       e.current = false;
@@ -19,8 +17,7 @@
 
   $: {
     if ($navigating){
-      currentPage = $navigating.to.route.id;
-      activeState(currentPage);
+      activeState($navigating.to.route.id);
     }
     if(menuList) {
       menuList = menuList;
